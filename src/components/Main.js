@@ -1,26 +1,25 @@
 import React from "react";
 import api from "../utils/api";
+import Card from "./Card";
 
-function Main({onEditAvatar, onEditProfile, onAddPlace}) {
-
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
+function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
+  const [userName, setUserName] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
+  const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userData, cards]) => {
-        console.log(cards)
         setUserName(userData.name);
         setUserDescription(userData.about);
-        setUserAvatar(userData.avatar)
+        setUserAvatar(userData.avatar);
         setCards(cards);
       })
-    .catch((err) => {
-      console.log(err); // выведем ошибку в консоль
-    });
-  }, [])
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+  }, []);
 
   return (
     <main className="content">
@@ -53,22 +52,11 @@ function Main({onEditAvatar, onEditProfile, onAddPlace}) {
         ></button>
       </section>
 
-      {/* секция с карточками */}
       <section aria-label="Список мест в которых стоит побывать">
         <ul className="cards">
-          {/* <!-- контейнер для добавления карточек --> */}
+          {/* контейнер для карточек */}
           {cards.map((card) => (
-            <li className="card" key={card._id}>
-              <img className="card__img" src={card.link} alt={card.name}></img>
-              <button className="card__button-delete" type="button" aria-label="Удалить"></button>
-              <div className="card__inner">
-                <h2 className="card__caption">{card.name}</h2>
-                <div className="card__like">
-                  <button className="card__button-like" type="button" aria-label="Лайк"></button>
-                  <p className="card__amount-like"></p>
-                </div>
-              </div>
-            </li>
+            <Card key={card._id} card={card} />
           ))}
         </ul>
       </section>
