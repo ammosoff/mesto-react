@@ -13,6 +13,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(false);
 
   //обработчики видимости попапов
   const handleEditAvatarClick = () => {
@@ -27,11 +28,16 @@ function App() {
     setIsAddPlacePopupOpen(true);
   };
 
+  const handleCardClick = (card) => {
+    setSelectedCard(card)
+  }
+
   // закрытие попапов
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setSelectedCard(false)
   };
 
   return (
@@ -41,6 +47,7 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
 
@@ -122,6 +129,9 @@ function App() {
 
       {/* попап подтверждения удаления */}
       <PopupWithForm name="confirmation" title="Вы уверены?"></PopupWithForm>
+
+      {/* попап открытия картинки с описанием */}
+      <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
     </div>
   );
 }

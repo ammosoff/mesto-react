@@ -2,10 +2,10 @@ import React from "react";
 import api from "../utils/api";
 import Card from "./Card";
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
+  const [userName, setUserName] = React.useState(null);
+  const [userDescription, setUserDescription] = React.useState(null);
+  const [userAvatar, setUserAvatar] = React.useState(null);
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
@@ -56,7 +56,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
         <ul className="cards">
           {/* контейнер для карточек */}
           {cards.map((card) => (
-            <Card key={card._id} card={card} />
+            <Card key={card._id} card={card} onCardClick={onCardClick} />
           ))}
         </ul>
       </section>
