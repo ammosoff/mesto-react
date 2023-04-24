@@ -4,7 +4,7 @@ function ImagePopup({ card, onClose }) {
   return (
     <section
       className={`popup popup_type_view-picture ${
-        card ? "popup_is-opened" : ""
+        card.link ? "popup_is-opened" : ""
       }`}
       aria-label="Посмотреть изображение"
     >

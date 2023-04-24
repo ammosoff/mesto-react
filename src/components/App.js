@@ -13,7 +13,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState({name: '', link: ''});
 
   //обработчики видимости попапов
   const handleEditAvatarClick = () => {
@@ -37,7 +37,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard(false)
+    setSelectedCard({name: '', link: ''})
   };
 
   return (
@@ -57,6 +57,7 @@ function App() {
         title="Редактировать профиль"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
+        buttonText="Сохранить"
       >
         <input
           id="name-input"
@@ -86,6 +87,7 @@ function App() {
         title="Новое место"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
+        buttonText="Создать"
       >
         <input
           id="title-input"
@@ -115,6 +117,7 @@ function App() {
         title="Обновить аватар"
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
+        buttonText="Сохранить"
       >
         <input
           id="avatar-input"
