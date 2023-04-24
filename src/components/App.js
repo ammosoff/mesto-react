@@ -131,7 +131,7 @@ function App() {
       </PopupWithForm>
 
       {/* попап подтверждения удаления */}
-      <PopupWithForm name="confirmation" title="Вы уверены?"></PopupWithForm>
+      <PopupWithForm name="confirmation" title="Вы уверены?" buttonText="Да"></PopupWithForm>
 
       {/* попап открытия картинки с описанием */}
       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
