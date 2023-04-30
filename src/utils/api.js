@@ -65,7 +65,9 @@ class Api {
     })
   }
 
-  // добавляем лайк
+  /* До ПР 11 использовал отдельные методы для работы с лайками */
+  
+/*   // добавляем лайк
   setLikeAdd(id) {
     return this._request(`/cards/${id}/likes`, {
       method: 'PUT',
@@ -79,7 +81,16 @@ class Api {
       method: 'DELETE',
       headers: this._headers
     })
+  } */
+
+  // добавление / удаление лайка
+  changeLikeCardStatus(id, isLiked) {
+    return this._request(`/cards/${id}/likes`, {
+      method: `${isLiked ? 'PUT' : 'DELETE'}`,
+      headers: this._headers
+    })
   }
+
 
   // обновление аватара
   setUpdateAvatar(avatarLink) {

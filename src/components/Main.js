@@ -3,11 +3,11 @@ import api from "../utils/api";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
+function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike }) {
   // подписываемся на контекст CurrentUserContext
   const currentUser = React.useContext(CurrentUserContext);
 
-  const [cards, setCards] = useState([]);
+/*   const [cards, setCards] = useState([]); 
 
   React.useEffect(() => {
     api
@@ -19,7 +19,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
         console.log(err); // выведем ошибку в консоль
       });
   }, []);
-
+ */
   return (
     <main className="content">
       {/* профиль */}
@@ -59,7 +59,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
         <ul className="cards">
           {/* контейнер для карточек */}
           {cards.map((card) => (
-            <Card key={card._id} card={card} onCardClick={onCardClick} />
+            <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={onCardLike} />
           ))}
         </ul>
       </section>

@@ -20,15 +20,28 @@ function App() {
   // стейт текушего пользователя 
   const [currentUser, setCurrentUser] = useState({});
 
+  // стейт карточки
+  const [cards, setCards] = useState([]);
+
   // делаем запрос к серверу и обновляем стейт-переменную из полученного значения
   React.useEffect(() => {
     api
       .getUserInfo()
       .then((userData) => {
-/*                 console.log(userData) */
         setCurrentUser(userData);
       })
       .catch((err) => console.log(err));
+  }, []);
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((cards) => {
+        setCards(cards);
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
   }, []);
 
   //обработчики видимости попапов
@@ -56,15 +69,29 @@ function App() {
     setSelectedCard({ name: "", link: "" });
   };
 
+
+  // функция добавления/снятия лайка
+  const handleCardLike = (card) => {
+    // Проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
         <Main
+          cards={cards}
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
         />
         <Footer />
 
