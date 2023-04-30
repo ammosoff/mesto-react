@@ -1,19 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import api from "../utils/api";
 import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
-  const [userName, setUserName] = React.useState(null);
-  const [userDescription, setUserDescription] = React.useState(null);
-  const [userAvatar, setUserAvatar] = React.useState(null);
-  const [cards, setCards] = React.useState([]);
+  // подписываемся на контекст CurrentUserContext
+  const currentUser = React.useContext(CurrentUserContext);
+
+  const [cards, setCards] = useState([]);
 
   React.useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([userData, cards]) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
+    api
+      .getInitialCards()
+      .then((cards) => {
         setCards(cards);
       })
       .catch((err) => {
@@ -26,7 +25,11 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
       {/* профиль */}
       <section className="profile content__profile">
         <div className="profile__info">
-          <img className="profile__avatar" src={userAvatar} alt="Аватар" />
+          <img
+            className="profile__avatar"
+            src={currentUser.avatar}
+            alt="Аватар"
+          />
           <button
             onClick={onEditAvatar}
             className="profile__button-avatar"
@@ -34,8 +37,8 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
             aria-label="Редактировать аватар"
           ></button>
           <div className="profile__inner">
-            <h1 className="profile__name">{userName}</h1>
-            <p className="profile__caption">{userDescription}</p>
+            <h1 className="profile__name">{currentUser.name}</h1>
+            <p className="profile__caption">{currentUser.about}</p>
             <button
               onClick={onEditProfile}
               className="profile__button-edit"
