@@ -1,7 +1,7 @@
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick, onCardLike }) {
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
   // подписываемся на контекст CurrentUserContext
   const currentUser = React.useContext(CurrentUserContext);
@@ -22,9 +22,14 @@ function Card({ card, onCardClick, onCardLike }) {
     `card__button-like ${isLiked && 'card__button-like_active'}` 
   );
 
-  // Обработчик клика лайка
+  // Обработчик кнопки лайка
   const handleLikeClick = () => {
     onCardLike(card);
+  }
+
+  // Обработчик кнопки удаления
+  const handleDeleteClick = () => {
+    onCardDelete(card);
   }
 
   const handleClick = () => {
@@ -43,6 +48,7 @@ function Card({ card, onCardClick, onCardLike }) {
         className={cardDeleteButtonClassName}
         type="button"
         aria-label="Удалить"
+        onClick={handleDeleteClick}
       ></button>
       <div className="card__inner">
         <h2 className="card__caption">{card.name}</h2>

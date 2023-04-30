@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import api from "../utils/api";
+/* import api from "../utils/api"; */
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike }) {
+function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete }) {
   // подписываемся на контекст CurrentUserContext
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -59,7 +59,7 @@ function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onC
         <ul className="cards">
           {/* контейнер для карточек */}
           {cards.map((card) => (
-            <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={onCardLike} />
+            <Card key={card._id} card={card} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} />
           ))}
         </ul>
       </section>
