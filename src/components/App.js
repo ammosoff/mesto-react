@@ -6,6 +6,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -18,10 +19,8 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({ name: "", link: "" });
 
-  // стейт текушего пользователя
+  // стейты текушего пользователя, карточек
   const [currentUser, setCurrentUser] = useState({});
-
-  // стейт карточки
   const [cards, setCards] = useState([]);
 
   // делаем запрос к серверу и обновляем стейт-переменную из полученного значения
@@ -97,14 +96,26 @@ function App() {
   };
 
   // функция обновления данных о пользователе
-  const handleUpdateUser = ({name, about}) => {
-    api.setUserInfo(name, about)
-    .then(res => {
-      setCurrentUser(res);
-      closeAllPopups();
-    })
-    .catch((err) => console.log(err))
-  }
+  const handleUpdateUser = ({ name, about }) => {
+    api
+      .setUserInfo(name, about)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // функция обновления аватара
+  const handleUpdateAvatar = ({ avatar }) => {
+    api
+      .setUpdateAvatar(avatar)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -122,7 +133,11 @@ function App() {
         <Footer />
 
         {/* попап редактирования профиля */}
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
 
         {/* Попап добавления новой карточки */}
         <PopupWithForm
@@ -155,23 +170,11 @@ function App() {
         </PopupWithForm>
 
         {/* попап обновления аватара */}
-        <PopupWithForm
-          name="avatar"
-          title="Обновить аватар"
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          buttonText="Сохранить"
-        >
-          <input
-            id="avatar-input"
-            className="popup__form-input"
-            type="url"
-            name="link"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="popup__form-input-error avatar-input-error"></span>
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        />
 
         {/* попап подтверждения удаления */}
         <PopupWithForm

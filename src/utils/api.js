@@ -93,12 +93,12 @@ class Api {
 
 
   // обновление аватара
-  setUpdateAvatar(avatarLink) {
+  setUpdateAvatar(avatar) {
     return this._request('/users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: avatarLink,
+        avatar,
       })
     })
   }
