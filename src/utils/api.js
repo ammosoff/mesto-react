@@ -34,13 +34,13 @@ class Api {
   }
 
   // отправляем на сервер данные о профиле
-  setUserInfo(dataProfile) {
+  setUserInfo(name, about) {
     return this._request('/users/me', {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: dataProfile.name,
-        about: dataProfile.about
+        name,
+        about
       })
     })
   }
