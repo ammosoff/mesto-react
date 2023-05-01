@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -23,7 +23,7 @@ function App() {
   const [cards, setCards] = useState([]);
 
   // делаем запрос к серверу и обновляем стейт-переменные из полученного значения
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userData, cards]) => {
         setCurrentUser(userData);
