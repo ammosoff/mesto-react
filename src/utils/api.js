@@ -46,13 +46,13 @@ class Api {
   }
 
   // Отправляем на сервер данные новой карточки
-  setAdditionCard(dataCard) {
+  setAdditionCard(name, link) {
     return this._request('/cards', {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: dataCard.name,
-        link: dataCard.link
+        name,
+        link
       })
     })
   }

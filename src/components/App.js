@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -69,7 +70,7 @@ function App() {
     setSelectedCard({ name: "", link: "" });
   };
 
-  // функция добавления/снятия лайка
+  // обработчик добавления/снятия лайка
   const handleCardLike = (card) => {
     // Проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -85,7 +86,17 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  // функция удаления карточки
+  // обработчик добавления карточки
+  const handleAddPlaceSubmit = ({name, link}) => {
+    api.setAdditionCard(name, link)
+    .then(newCard => {
+      setCards([newCard, ...cards]); 
+      closeAllPopups();
+    })
+    .catch((err) => console.log(err))
+  }
+
+  // обработчик удаления карточки
   const handleCardDelete = (card) => {
     api
       .setDeleteCard(card._id)
@@ -95,23 +106,23 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  // функция обновления данных о пользователе
+  // обработчик обновления данных о пользователе
   const handleUpdateUser = ({ name, about }) => {
     api
       .setUserInfo(name, about)
-      .then((res) => {
-        setCurrentUser(res);
+      .then((userInfo) => {
+        setCurrentUser(userInfo);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
   };
 
-  // функция обновления аватара
+  // обработчик обновления аватара
   const handleUpdateAvatar = ({ avatar }) => {
     api
       .setUpdateAvatar(avatar)
-      .then((res) => {
-        setCurrentUser(res);
+      .then((userInfo) => {
+        setCurrentUser(userInfo);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
@@ -140,34 +151,11 @@ function App() {
         />
 
         {/* Попап добавления новой карточки */}
-        <PopupWithForm
-          name="add-card"
-          title="Новое место"
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          buttonText="Создать"
-        >
-          <input
-            id="title-input"
-            className="popup__form-input"
-            type="text"
-            name="name"
-            placeholder="Название"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-          <span className="popup__form-input-error title-input-error"></span>
-          <input
-            id="link-input"
-            className="popup__form-input"
-            type="url"
-            name="link"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="popup__form-input-error link-input-error"></span>
-        </PopupWithForm>
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         {/* попап обновления аватара */}
         <EditAvatarPopup
