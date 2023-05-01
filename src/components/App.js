@@ -25,7 +25,19 @@ function App() {
   const [cards, setCards] = useState([]);
 
   // делаем запрос к серверу и обновляем стейт-переменную из полученного значения
+
   React.useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([userData, cards]) => {
+        setCurrentUser(userData);
+        setCards(cards);
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+  }, []);
+
+/*   React.useEffect(() => {
     api
       .getUserInfo()
       .then((userData) => {
@@ -43,7 +55,7 @@ function App() {
       .catch((err) => {
         console.log(err); // выведем ошибку в консоль
       });
-  }, []);
+  }, []); */
 
   //обработчики видимости попапов
   const handleEditAvatarClick = () => {
