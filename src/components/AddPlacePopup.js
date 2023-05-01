@@ -18,11 +18,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   const handleSubmit = (e) => {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-    
+
     // Передаём значения управляемых компонентов во внешний обработчик
     onAddPlace({
       name,
-      link
+      link,
     });
   };
 

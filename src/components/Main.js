@@ -15,19 +15,6 @@ function Main({
   // подписываемся на контекст CurrentUserContext
   const currentUser = React.useContext(CurrentUserContext);
 
-  /*   const [cards, setCards] = useState([]); 
-
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        setCards(cards);
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
-  }, []);
- */
   return (
     <main className="content">
       {/* профиль */}

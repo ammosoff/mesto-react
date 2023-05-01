@@ -19,23 +19,23 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   // Обработчик изменения инпута обновляет стейт
   const handleChangeName = (e) => {
     setName(e.target.value);
-  }
+  };
 
   // Обработчик изменения инпута обновляет стейт
   const handleChangeDescription = (e) => {
     setDescription(e.target.value);
-  }
+  };
 
   const handleSubmit = (e) => {
     // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
-  
+
     // Передаём значения управляемых компонентов во внешний обработчик
     onUpdateUser({
       name,
       about: description,
     });
-  }
+  };
 
   return (
     <PopupWithForm

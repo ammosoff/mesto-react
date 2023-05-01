@@ -1,5 +1,3 @@
-/* import logo from './logo.svg'; */
-/* import './App.css'; */
 import React, { useState } from "react";
 import Header from "./Header";
 import Main from "./Main";
@@ -24,8 +22,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
 
-  // делаем запрос к серверу и обновляем стейт-переменную из полученного значения
-
+  // делаем запрос к серверу и обновляем стейт-переменные из полученного значения
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userData, cards]) => {
@@ -37,7 +34,7 @@ function App() {
       });
   }, []);
 
-/*   React.useEffect(() => {
+  /*   React.useEffect(() => {
     api
       .getUserInfo()
       .then((userData) => {
@@ -99,14 +96,15 @@ function App() {
   };
 
   // обработчик добавления карточки
-  const handleAddPlaceSubmit = ({name, link}) => {
-    api.setAdditionCard(name, link)
-    .then(newCard => {
-      setCards([newCard, ...cards]); 
-      closeAllPopups();
-    })
-    .catch((err) => console.log(err))
-  }
+  const handleAddPlaceSubmit = ({ name, link }) => {
+    api
+      .setAdditionCard(name, link)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+  };
 
   // обработчик удаления карточки
   const handleCardDelete = (card) => {

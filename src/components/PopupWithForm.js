@@ -1,4 +1,4 @@
-/* Общий компонент попапов (до ПР 11)*/
+/* Общий компонент попапов */
 
 import React from "react";
 
@@ -17,7 +17,12 @@ function PopupWithForm(props) {
           onClick={props.onClose}
         ></button>
         <h2 className="popup__title">{props.title}</h2>
-        <form className="popup__form" name={`${props.name}-form`} onSubmit={props.onSubmit} noValidate>
+        <form
+          className="popup__form"
+          name={`${props.name}-form`}
+          onSubmit={props.onSubmit}
+          noValidate
+        >
           {props.children}
           <button className="popup__button-save" type="submit">
             {props.buttonText}
